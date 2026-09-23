@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escape Game - Épreuve N°6</title>
+    <style>
+        body {
+            font-family: "American Typewriter", "Courier New", Courier, serif;
+            /* Fond Étape 1 : Effet papier ancien */
+            background-color: #f4ebd8;
+            background-image: radial-gradient(circle at center, #fdf6e3 0%, #e6d5b8 100%);
+            color: #3a2e24; 
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            transition: background 0.5s ease, color 0.5s ease; /* Transition douce pour le changement de couleur */
+        }
+
+        /* --- CLASSE DYNAMIQUE POUR L'ÉTAPE 2 (Fond vert militaire #2B4A3F) --- */
+        body.etape2 {
+            background-color: #2B4A3F !important;
+            background-image: none !important;
+            color: #ffffff !important;
+        }
+
+        .container {
+            max-width: 600px;
+            padding: 20px;
+            width: 100%;
+        }
+
+        .logo {
+            max-width: 150px; 
+            margin-bottom: 20px;
+        }
+
+        /* --- Nouveau titre fixe demandé --- */
+        .titre-epreuve {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+            letter-spacing: 2px;
+            color: #2c221a;
+        }
+        body.etape2 .titre-epreuve {
+            color: #ffffff !important;
+        }
+
+        /* --- Titre dynamique --- */
+        .titre-principal {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 25px;
+            color: #2c221a;
+        }
+        body.etape2 .titre-principal {
+            color: #ffffff !important;
+        }
+
+        .enigme-texte {
+            font-size: 1.2rem;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .visuel-enigme {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15); 
+        }
+
+        .fw-light { font-weight: 300; }
+        .fw-regular { font-weight: 400; }
+        .fw-bold { font-weight: bold; }
+
+        .input-group {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        input[type="text"] {
+            font-family: "American Typewriter", "Courier New", Courier, serif;
+            font-size: 1rem;
+            padding: 10px 15px;
+            border: 2px solid #4a3b2c; 
+            border-radius: 4px;
+            width: 250px;
+            max-width: 80%;
+            margin-bottom: 10px;
+            outline: none;
+            background-color: rgba(255, 255, 255, 0.7); 
+            transition: all 0.3s ease;
+        }
+        body.etape2 input[type="text"] {
+            border-color: #ffffff;
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #333333;
+        }
+
+        input[type="text"]::placeholder {
+            color: #888;
+            font-style: italic;
+        }
+
+        button {
+            font-family: "American Typewriter", "Courier New", Courier, serif;
+            font-size: 1.1rem;
+            font-weight: bold;
+            padding: 10px 20px;
+            background-color: #3a2e24; 
+            color: white;
+            border: 2px solid #3a2e24;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 60px;
+        }
+
+        button:hover {
+            background-color: transparent;
+            color: #3a2e24;
+        }
+
+        /* Adaptation du bouton pour l'étape 2 sur fond vert militaire */
+        body.etape2 button {
+            background-color: #ffffff;
+            color: #2B4A3F;
+            border-color: #ffffff;
+        }
+        body.etape2 button:hover {
+            background-color: transparent;
+            color: #ffffff;
+        }
+
+        button:disabled, input:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .compteur {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        body.etape2 .compteur {
+            color: #e0e0e0;
+        }
+
+        /* Conteneur de résultat et vidéo */
+        #message-resultat {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid #4a3b2c;
+            background-color: rgba(255, 255, 255, 0.9); 
+            text-align: center;
+            color: #333333;
+            border-radius: 8px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        body.etape2 #message-resultat {
+            border-color: #ffffff;
+        }
+
+        #message-resultat h3 {
+            margin-top: 0;
+            text-align: center;
+        }
+        
+        .video-container {
+            position: relative;
+            width: 100%;
+            max-width: 350px;
+            margin: 0 auto;
+            aspect-ratio: 9 / 16;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+
+        .erreur {
+            color: #b71c1c;
+            font-weight: bold;
+            margin-top: 10px;
+            display: none;
+        }
+        body.etape2 .erreur {
+            color: #ffeb3b;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Logo principal -->
+        <img src="CREPEAU.png" alt="Logo de l'étape" class="logo">
+
+        <!-- Titre fixe -->
+        <div class="titre-epreuve">ÉPREUVE N°6</div>
+
+        <!-- Titre dynamique -->
+        <div id="titre-principal" class="titre-principal">Un peu d’observation pour déverrouiller cette épreuve</div>
+
+        <!-- ================= ÉTAPE 1 : OBSERVATION ================= -->
+        <div id="zone-observation">
+            <p class="enigme-texte fw-regular">Quel nombre a été emporté par les vents ?</p>
+            <img src="1-michel-crepeau.png" alt="Visuel observation Michel Crépeau" class="visuel-enigme">
+            
+            <div class="input-group">
+                <input type="text" id="observation-input" placeholder="Votre réponse">
+                <br>
+                <button id="btn-valider-observation" onclick="verifierObservation()">Valider</button>
+            </div>
+        </div>
+
+        <!-- ================= ÉTAPE 2 : ÉNIGME TEXTE (Masquée au départ) ================= -->
+        <div id="zone-enigme-texte" style="display: none;">
+            
+            <p class="enigme-texte fw-regular">Pour être un bon journaliste, connaitre les principales formes poétiques sera une qualité indéniable.</p>
+            
+            <div class="input-group">
+                <input type="text" id="reponse-input" placeholder="Saisissez votre réponse">
+                <br>
+                <button id="btn-valider-enigme" onclick="verifierReponse()">Valider</button>
+            </div>
+        </div>
+
+        <!-- Éléments de suivi communs -->
+        <p class="compteur" id="texte-compteur">Tentatives restantes : <span id="nb-essais">4</span></p>
+        <div id="message-erreur" class="erreur">Mauvaise réponse. Essayez encore !</div>
+
+        <!-- ================= ÉTAPE 3 : RÉSULTATS (Masquée au départ) ================= -->
+        <div id="message-resultat">
+            <h3>Bravo !</h3>
+            <p class="enigme-texte fw-regular">Voici votre indice :</p>
+            
+            <!-- Vidéo YouTube qui se lancera en plein écran -->
+            <div class="video-container">
+                <iframe id="video-indice" allow="autoplay; fullscreen" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let etapeActuelle = 1; 
+        let tentativesRestantes = 4;
+        
+        // Réponses acceptées pour l'étape 1
+        const reponsesObservationAcceptees = ["17", "dix sept", "dix-sept"];
+        
+        // Réponses acceptées pour l'étape 2 
+        const reponsesEnigmeAcceptees = ["rupella"]; 
+
+        // Fonction de nettoyage du texte (enlève les majuscules, les espaces en trop et les accents)
+        function formaterReponse(texte) {
+            return texte.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+        }
+
+        // Fonction pour valider la première étape d'observation
+        function verifierObservation() {
+            const inputElement = document.getElementById("observation-input");
+            const btnElement = document.getElementById("btn-valider-observation");
+            const msgErreur = document.getElementById("message-erreur");
+            const nbEssaisElement = document.getElementById("nb-essais");
+
+            const reponseJoueur = formaterReponse(inputElement.value);
+
+            if (reponseJoueur === "") return;
+
+            // Vérifie si la réponse du joueur est dans la liste des réponses acceptées
+            if (reponsesObservationAcceptees.includes(reponseJoueur)) {
+                // Succès étape 1 -> Passage à l'étape 2
+                document.getElementById("zone-observation").style.display = "none";
+                document.getElementById("zone-enigme-texte").style.display = "block";
+                msgErreur.style.display = "none";
+                
+                // Activation de la classe CSS pour passer le fond au vert militaire #2B4A3F
+                document.body.classList.add("etape2");
+                
+                // Modification du titre sous le logo
+                document.getElementById("titre-principal").textContent = "L'Énigme";
+                
+                // Réinitialisation des tentatives pour l'énigme suivante
+                etapeActuelle = 2;
+                tentativesRestantes = 4;
+                nbEssaisElement.textContent = tentativesRestantes;
+            } else {
+                gestionErreur(inputElement, btnElement, msgErreur, nbEssaisElement);
+            }
+        }
+
+        // Fonction pour valider la seconde étape (énigme)
+        function verifierReponse() {
+            const inputElement = document.getElementById("reponse-input");
+            const btnElement = document.getElementById("btn-valider-enigme");
+            const msgErreur = document.getElementById("message-erreur");
+            const msgResultat = document.getElementById("message-resultat");
+            const nbEssaisElement = document.getElementById("nb-essais");
+
+            const reponseJoueur = formaterReponse(inputElement.value);
+
+            if (reponseJoueur === "") return; 
+
+            if (reponsesEnigmeAcceptees.includes(reponseJoueur)) {
+                // Succès final !
+
+                document.getElementById("zone-enigme-texte").style.display = "none";
+                document.getElementById("texte-compteur").style.display = "none";
+                msgErreur.style.display = "none";
+                msgResultat.style.display = "block";
+                
+                // On cache les titres à la fin pour épurer l'affichage de l'encart final
+                document.getElementById("titre-principal").style.display = "none";
+                document.querySelector(".titre-epreuve").style.display = "none";
+
+                // Lancement de la vidéo YouTube (ID: XDaZi3fba7Y) en plein écran avec masquage des sous-titres
+                const iframe = document.getElementById("video-indice");
+                iframe.src = "https://www.youtube.com/embed/XDaZi3fba7Y?autoplay=1&rel=0&cc_load_policy=0&iv_load_policy=3";
+
+                // Requête de passage en plein écran
+                if (iframe.requestFullscreen) {
+                    iframe.requestFullscreen();
+                } else if (iframe.webkitRequestFullscreen) { /* Safari / Chrome */
+                    iframe.webkitRequestFullscreen();
+                } else if (iframe.msRequestFullscreen) { /* IE11 */
+                    iframe.msRequestFullscreen();
+                }
+            } else {
+                gestionErreur(inputElement, btnElement, msgErreur, nbEssaisElement);
+            }
+        }
+
+        // Système de décompte partagé et générique
+        function gestionErreur(inputEl, btnEl, msgErr, txtCompteur) {
+            tentativesRestantes--;
+            txtCompteur.textContent = tentativesRestantes;
+            msgErr.style.display = "block";
+            inputEl.value = "";
+
+            if (tentativesRestantes <= 0) {
+                inputEl.disabled = true;
+                btnEl.disabled = true;
+                msgErr.textContent = "Vous n'avez plus de tentatives ! L'énigme est bloquée.";
+            }
+        }
+
+        // Prise en compte de la touche Entrée pour l'étape 1
+        document.getElementById("observation-input").addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                verifierObservation();
+            }
+        });
+
+        // Prise en compte de la touche Entrée pour l'étape 2
+        document.getElementById("reponse-input").addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                verifierReponse();
+            }
+        });
+    </script>
+</body>
+</html>
