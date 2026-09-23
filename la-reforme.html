@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escape Game - Épreuve N°10</title>
+    <style>
+        body {
+            font-family: "American Typewriter", "Courier New", Courier, serif;
+            /* Fond Étape 1 : Effet papier ancien */
+            background-color: #f4ebd8;
+            background-image: radial-gradient(circle at center, #fdf6e3 0%, #e6d5b8 100%);
+            color: #3a2e24; 
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            transition: background 0.5s ease, color 0.5s ease;
+        }
+
+        /* --- CLASSE DYNAMIQUE POUR L'ÉTAPE 2 (Fond vert militaire #2B4A3F) --- */
+        body.etape2 {
+            background-color: #2B4A3F !important;
+            background-image: none !important;
+            color: #ffffff !important;
+        }
+
+        .container {
+            max-width: 600px;
+            padding: 20px;
+            width: 100%;
+        }
+
+        .logo {
+            max-width: 150px; 
+            margin-bottom: 20px;
+        }
+
+        /* --- Titres --- */
+        .titre-epreuve {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+            letter-spacing: 2px;
+            color: #2c221a;
+        }
+        body.etape2 .titre-epreuve {
+            color: #ffffff !important;
+        }
+
+        .titre-principal {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 25px;
+            color: #2c221a;
+        }
+        body.etape2 .titre-principal {
+            color: #ffffff !important;
+        }
+
+        .enigme-texte {
+            font-size: 1.2rem;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        /* Taille réduite à max-width: 250px et centrée */
+        .visuel-enigme {
+            max-width: 250px;
+            width: 100%;
+            height: auto;
+            border-radius: 4px;
+            margin: 0 auto 20px auto;
+            display: block;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15); 
+        }
+
+        /* Taille réduite pour l'image de l'énigme */
+        .image-reduite {
+            max-width: 250px;
+            width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto 20px auto;
+            border-radius: 4px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        input[type="text"] {
+            font-family: "American Typewriter", "Courier New", Courier, serif;
+            font-size: 1rem;
+            padding: 10px 15px;
+            border: 2px solid #4a3b2c; 
+            border-radius: 4px;
+            width: 250px;
+            max-width: 80%;
+            margin-bottom: 10px;
+            outline: none;
+            background-color: rgba(255, 255, 255, 0.7); 
+            transition: all 0.3s ease;
+        }
+        body.etape2 input[type="text"] {
+            border-color: #ffffff;
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #333333;
+        }
+
+        button {
+            font-family: "American Typewriter", "Courier New", Courier, serif;
+            font-size: 1.1rem;
+            font-weight: bold;
+            padding: 10px 20px;
+            background-color: #3a2e24; 
+            color: white;
+            border: 2px solid #3a2e24;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 60px;
+        }
+
+        button:hover { background-color: transparent; color: #3a2e24; }
+
+        body.etape2 button {
+            background-color: #ffffff;
+            color: #2B4A3F;
+            border-color: #ffffff;
+        }
+        body.etape2 button:hover {
+            background-color: transparent;
+            color: #ffffff;
+        }
+
+        .compteur { font-size: 0.9rem; color: #666; margin-bottom: 20px; }
+        body.etape2 .compteur { color: #e0e0e0; }
+
+        #message-resultat {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid #4a3b2c;
+            background-color: rgba(255, 255, 255, 0.9); 
+            text-align: center;
+            color: #333333;
+            border-radius: 8px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        body.etape2 #message-resultat { border-color: #ffffff; }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            max-width: 350px;
+            margin: 0 auto;
+            aspect-ratio: 9 / 16;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+
+        .erreur { color: #b71c1c; font-weight: bold; margin-top: 10px; display: none; }
+        body.etape2 .erreur { color: #ffeb3b; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <img src="REFORME.png" alt="Logo de l'étape" class="logo">
+        <div class="titre-epreuve">ÉPREUVE N°10</div>
+        <div id="titre-principal" class="titre-principal">Un peu d’observation pour déverrouiller cette épreuve</div>
+
+        <!-- ================= ÉTAPE 1 ================= -->
+        <div id="zone-observation">
+            <p class="enigme-texte fw-regular">Qu'est-ce qui a été "reformée" ?</p>
+            <img src="4-temple-protestant.png" alt="Temple protestant" class="visuel-enigme">
+            <div class="input-group">
+                <input type="text" id="observation-input" placeholder="Votre réponse">
+                <br>
+                <button id="btn-valider-observation" onclick="verifierObservation()">Valider</button>
+            </div>
+        </div>
+
+        <!-- ================= ÉTAPE 2 ================= -->
+        <div id="zone-enigme-texte" style="display: none;">
+            <p class="enigme-texte fw-regular">Un bon journaliste observe analyse ses sources dans ses moindres détails. Il sait également les transcrire pour mieux les utiliser.</p>
+            <img src="belle-epoque-code.png" alt="Code Belle Époque" class="image-reduite">
+            <div class="input-group">
+                <input type="text" id="reponse-input" placeholder="Saisissez votre réponse">
+                <br>
+                <button id="btn-valider-enigme" onclick="verifierReponse()">Valider</button>
+            </div>
+        </div>
+
+        <p class="compteur" id="texte-compteur">Tentatives restantes : <span id="nb-essais">4</span></p>
+        <div id="message-erreur" class="erreur">Mauvaise réponse. Essayez encore !</div>
+
+        <!-- ================= ÉTAPE 3 ================= -->
+        <div id="message-resultat">
+            <h3>Bravo !</h3>
+            <p class="enigme-texte fw-regular">Voici votre indice :</p>
+            <div class="video-container">
+                <iframe id="video-indice" allow="autoplay; fullscreen" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let tentativesRestantes = 4;
+        const reponsesObservationAcceptees = ["confession"];
+        const reponsesEnigmeAcceptees = ["5012"]; 
+
+        function formaterReponse(texte) {
+            return texte.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+        }
+
+        function verifierObservation() {
+            const inputElement = document.getElementById("observation-input");
+            const btnElement = document.getElementById("btn-valider-observation");
+            const msgErreur = document.getElementById("message-erreur");
+            const nbEssaisElement = document.getElementById("nb-essais");
+            const reponseJoueur = formaterReponse(inputElement.value);
+
+            if (reponseJoueur === "") return;
+            if (reponsesObservationAcceptees.includes(reponseJoueur)) {
+                document.getElementById("zone-observation").style.display = "none";
+                document.getElementById("zone-enigme-texte").style.display = "block";
+                msgErreur.style.display = "none";
+                document.body.classList.add("etape2");
+                document.getElementById("titre-principal").textContent = "L'Énigme";
+            } else {
+                gestionErreur(inputElement, btnElement, msgErreur, nbEssaisElement);
+            }
+        }
+
+        function verifierReponse() {
+            const inputElement = document.getElementById("reponse-input");
+            const btnElement = document.getElementById("btn-valider-enigme");
+            const msgErreur = document.getElementById("message-erreur");
+            const msgResultat = document.getElementById("message-resultat");
+            const nbEssaisElement = document.getElementById("nb-essais");
+            const reponseJoueur = formaterReponse(inputElement.value);
+
+            if (reponseJoueur === "") return; 
+            if (reponsesEnigmeAcceptees.includes(reponseJoueur)) {
+                document.getElementById("zone-enigme-texte").style.display = "none";
+                document.getElementById("texte-compteur").style.display = "none";
+                msgErreur.style.display = "none";
+                msgResultat.style.display = "block";
+                document.getElementById("titre-principal").style.display = "none";
+                document.querySelector(".titre-epreuve").style.display = "none";
+
+                const iframe = document.getElementById("video-indice");
+                iframe.src = "https://www.youtube.com/embed/ImygOgwmNaA?autoplay=1&rel=0&cc_load_policy=0&iv_load_policy=3";
+
+                if (iframe.requestFullscreen) iframe.requestFullscreen();
+                else if (iframe.webkitRequestFullscreen) iframe.webkitRequestFullscreen();
+                else if (iframe.msRequestFullscreen) iframe.msRequestFullscreen();
+            } else {
+                gestionErreur(inputElement, btnElement, msgErreur, nbEssaisElement);
+            }
+        }
+
+        function gestionErreur(inputEl, btnEl, msgErr, txtCompteur) {
+            tentativesRestantes--;
+            txtCompteur.textContent = tentativesRestantes;
+            msgErr.style.display = "block";
+            inputEl.value = "";
+            if (tentativesRestantes <= 0) {
+                inputEl.disabled = true;
+                btnEl.disabled = true;
+                msgErr.textContent = "Vous n'avez plus de tentatives ! L'énigme est bloquée.";
+            }
+        }
+
+        document.getElementById("observation-input").addEventListener("keypress", (e) => { if(e.key === "Enter") verifierObservation(); });
+        document.getElementById("reponse-input").addEventListener("keypress", (e) => { if(e.key === "Enter") verifierReponse(); });
+    </script>
+</body>
+</html>
