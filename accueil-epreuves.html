@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Rochelle Quest - Accueil</title>
+    <style>
+        body {
+            font-family: "American Typewriter", "Courier New", Courier, serif;
+            background-color: #f4ebd8;
+            background-image: radial-gradient(circle at center, #fdf6e3 0%, #e6d5b8 100%);
+            color: #3a2e24; 
+            margin: 0;
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+        }
+
+        /* Logo principal */
+        .logo {
+            max-width: 150px; 
+            height: auto;
+            margin-bottom: 20px;
+        }
+
+        /* Graisses et styles de titres */
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 800; /* Très gras */
+            letter-spacing: 3px;
+            margin: 0 0 5px 0;
+            color: #2c221a;
+            text-transform: uppercase;
+        }
+
+        h2 {
+            font-size: 1.3rem;
+            font-weight: 400; /* Regular */
+            font-style: italic;
+            margin: 0 0 30px 0;
+            color: #554335;
+        }
+
+        /* Liste des boutons */
+        .menu-epreuves {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 40px;
+        }
+
+        .btn-epreuve {
+            font-family: "American Typewriter", "Courier New", Courier, serif;
+            font-size: 1.1rem;
+            font-weight: 600; /* Semi-gras */
+            padding: 14px 20px;
+            background-color: #3a2e24; 
+            color: #ffffff;
+            border: 2px solid #3a2e24;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            display: block;
+        }
+
+        .btn-epreuve:hover {
+            background-color: transparent;
+            color: #3a2e24;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        /* Pied de page / Mission */
+        .mission-card {
+            border: 2px dashed #4a3b2c;
+            background-color: rgba(255, 255, 255, 0.6);
+            padding: 25px 20px;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+
+        .mission-titre {
+            font-size: 1.2rem;
+            font-weight: 700; /* Gras */
+            letter-spacing: 1.5px;
+            margin-bottom: 12px;
+            color: #2c221a;
+        }
+
+        .mission-texte {
+            font-size: 1rem;
+            font-weight: 300; /* Light */
+            line-height: 1.6;
+            margin: 0 0 20px 0;
+        }
+
+        /* Effet dynamique d'encouragement */
+        @keyframes ondulation-brillance {
+            0%, 100% {
+                transform: scale(1) rotate(0deg);
+                color: #3a2e24;
+            }
+            50% {
+                transform: scale(1.1) rotate(-1deg);
+                color: #8b4513;
+                text-shadow: 0 0 8px rgba(212, 175, 55, 0.6);
+            }
+        }
+
+        .encouragement {
+            display: inline-block;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin: 0;
+            animation: ondulation-brillance 2.5s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- 1- Logo -->
+        <img src="GENERIQUE.png" alt="Logo La Rochelle Quest" class="logo">
+
+        <!-- 2- Titre -->
+        <h1>LA ROCHELLE QUEST</h1>
+
+        <!-- 3- Sous-titre -->
+        <h2>Liste des épreuves</h2>
+
+        <!-- Navigation épreuves -->
+        <nav class="menu-epreuves">
+            <a href="https://jeremiecabanesurbaines.github.io/La-Rochelle-Quest-pedestrian/" class="btn-epreuve">Épreuve test</a>
+            <a href="https://jeremiecabanesurbaines.github.io/La-Rochelle-Quest-pedestrian/1976.html" class="btn-epreuve">Épreuve 1</a>
+            <a href="https://jeremiecabanesurbaines.github.io/La-Rochelle-Quest-pedestrian/la-hanse.html" class="btn-epreuve">Épreuve 2</a>
+            <a href="https://jeremiecabanesurbaines.github.io/La-Rochelle-Quest-pedestrian/Francofolies.html" class="btn-epreuve">Épreuve 3</a>
+            <a href="https://jeremiecabanesurbaines.github.io/La-Rochelle-Quest-pedestrian/la-reforme.html" class="btn-epreuve">Épreuve 4</a>
+            <a href="https://jeremiecabanesurbaines.github.io/La-Rochelle-Quest-pedestrian/siege.html" class="btn-epreuve">Épreuve 5</a>
+            <a href="https://jeremiecabanesurbaines.github.io/La-Rochelle-Quest-pedestrian/belle-epoque.html" class="btn-epreuve">Épreuve 6</a>
+            <a href="https://jeremiecabanesurbaines.github.io/La-Rochelle-Quest-pedestrian/krebs.html" class="btn-epreuve">Épreuve 7</a>
+            <a href="https://jeremiecabanesurbaines.github.io/La-Rochelle-Quest-pedestrian/chaine.html" class="btn-epreuve">Épreuve 8</a>
+        </nav>
+
+        <!-- Pied de page : Mission -->
+        <footer class="mission-card">
+            <div class="mission-titre">VOTRE MISSION :</div>
+            <p class="mission-texte">
+                Résolvez les énigmes pour trouvez l'événement que le journaliste couvrait, puis glissez-vous dans sa peau et rédigez votre article.
+            </p>
+            <p class="encouragement">Bon courage !</p>
+        </footer>
+    </div>
+
+</body>
+</html>
